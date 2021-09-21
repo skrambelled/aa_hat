@@ -223,7 +223,7 @@ void check_exit(object room, object dest, string direction) {
   }
 
   // silently ignore mapenters
-  if(!dest->is_maproom())
+  if(dest->is_maproom())
     return;
   
   backroom = (string)dest->query_exit(backdir);
