@@ -226,7 +226,7 @@ void check_exit(object room, object dest, string direction) {
   if(!dest->is_maproom())
     return;
   
-  backroom = (string) dest->query_exit(backdir);
+  backroom = (string)dest->query_exit(backdir);
   if(!backroom) {
     report(room, "If you go \""+direction+"\" you cannot come \""+backdir+"\" to return.", QC_CHANNEL);
     return;
