@@ -202,29 +202,38 @@ string reverse_direction(string str) {
   }
 }
 
-int check_exit(object room, object dest, string direction) {
+void check_exit(object room, object dest, string direction) {
   string backdir, backroom;
 
-  if(!call_other(dest, "query_room"))
+  if(!call_other(dest, "query_room")) {
     report(room, "The \""+direction+"\" exit leads to a non-room.", QC_CHANNEL);
-  else {
-    if(dest == room)
-      report(room, "The \""+direction+"\" exit leads right back here.", QC_CHANNEL);
-    else {
-      backdir = reverse_direction(direction);
-      if(!backdir) {
-        if(!is_workroom(room))
-          report(room, "The \""+direction+"\" direction is non-standard.", QC_CHANNEL);
-      } else if(!is_mapenter(room)) {
-        backroom = (string) dest->query_exit(backdir);
-        if(!backroom)
-          report(room, "If you go \""+direction+"\" you cannot come \""+backdir+"\" to return.", QC_CHANNEL);
-        else
-          if(find_object(backroom) != room)
-            report(room, "If you go \""+direction+"\" the \""+backdir+"\" leads to another room instead.", QC_CHANNEL);
-      }
-    }
+    return;
   }
+
+  if(dest == room) {
+    report(room, "The \""+direction+"\" exit leads right back here.", QC_CHANNEL);
+    return;
+  }
+
+  backdir = reverse_direction(direction);
+  if(!backdir) {
+    if(!is_workroom(room))
+      report(room, "The \""+direction+"\" direction is non-standard.", QC_CHANNEL);
+    return;
+  }
+
+  // silently ignore mapenters
+  if(!dest->is_maproom())
+    return;
+  
+  backroom = (string) dest->query_exit(backdir);
+  if(!backroom) {
+    report(room, "If you go \""+direction+"\" you cannot come \""+backdir+"\" to return.", QC_CHANNEL);
+    return;
+  }
+
+  if(find_object(backroom) != room)
+    report(room, "If you go \""+direction+"\" the \""+backdir+"\" leads to another room instead.", QC_CHANNEL);
 }
 
 // TODO ditch the sorting crap
