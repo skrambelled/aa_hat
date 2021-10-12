@@ -1,4 +1,3 @@
-// this is in .gitignore, if it is adjusted it needs to be manually adjusted
 #ifndef HAT_CONFIG_PATHS
 #define HAT_CONFIG_PATHS
 
