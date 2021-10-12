@@ -166,24 +166,6 @@ void hatcheck_room_3(object room, mapping items) {
   hatcheck_item_list(first_inventory(room), 1);
 }
 
-int direction_sort(string str) {
-  switch(str) {
-    case "north":     return 1;
-    case "northeast": return 2;
-    case "east":      return 3;
-    case "southeast": return 4;
-    case "south":     return 5;
-    case "southwest": return 6;
-    case "west":      return 7;
-    case "northwest": return 8;
-    case "up":        return 9;
-    case "down":      return 10;
-    case "enter":     return 11;
-    case "out":       return 12;
-    default:          return 0;
-  }
-}
-
 string reverse_direction(string str) {
   switch(str) {
     case "north":     return "south";
@@ -236,27 +218,17 @@ void check_exit(object room, object dest, string direction) {
     report(room, "If you go \""+direction+"\" the \""+backdir+"\" leads to another room instead.", QC_CHANNEL);
 }
 
-// TODO ditch the sorting crap
 int check_exits(object room) {
   string *exits, direction, err;
   object dest;
-  int i, last_dir, this_dir, dir_ok;
+  int i;
 
   exits = (string *) room->query_exits();
   if(!sizeof(exits))
     return 0;
 
-  last_dir = 0;
-  dir_ok = 1;
   for(i=0; i<sizeof(exits); i += 2) {
     direction = exits[i+1];
-    this_dir = direction_sort(direction);
-    if(this_dir)
-      if(this_dir > last_dir)
-        last_dir = this_dir;
-      else
-        dir_ok = 0;
-
     err = catch(load_object(exits[i]));
 
     if(err)
@@ -266,9 +238,6 @@ int check_exits(object room) {
       check_exit(room, dest, direction);
     }
   }
-  // TODO remove once sort_exits is installed
-  if(!dir_ok)
-    report(room, "Put exits in order: N, NE, E, SE, S, SW, W, NW, up, down, enter, out.", QC_CHANNEL);
 
   return 1;
 }

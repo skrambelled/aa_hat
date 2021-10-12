@@ -442,6 +442,9 @@ void monster_align(object o) {
 
   if(align < min || align > max)
     report(o, "Alignment ("+align+") is too "+(align<min?"evil":"good")+" for a level "+lvl+" monster. Max: "+(align<min?min:max)+".", BALANCE_CHANNEL);
+
+  if(align <= -500 && !EVILSENSE->query_is_registered(o))
+    report(o, "Register with evilsense. Alignment: "+align+" ('man evilsense')", QC_CHANNEL);
 }
 
 

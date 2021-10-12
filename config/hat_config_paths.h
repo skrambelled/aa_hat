@@ -1,4 +1,3 @@
-// this is in .gitignore, if it is adjusted it needs to be manually adjusted
 #ifndef HAT_CONFIG_PATHS
 #define HAT_CONFIG_PATHS
 
@@ -20,5 +19,6 @@
 #define SPELLING_D HAT_PATH "daemon/spelling_d"
 #define WANDUS "/d/Balance/obj/wandus"
 #define DEBUG "/w/maker/tools/debug/debug"
+#define EVILSENSE "/w/adinos/class/paladin/evilsense"
 
 #endif
