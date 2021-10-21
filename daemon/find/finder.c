@@ -1,16 +1,21 @@
 #pragma strict_types
-inherit "obj/treasure";
 
-#define DIRLIST "/d/Qc/obj/find/DIRLIST"
-#define SAVE_FILE "/d/Qc/obj/find/FIND"
-#define DATA_FILE "/d/Qc/obj/find/FIND.dat"
+#include "find_def.h"
+
 #define TIME_BETWEEN_DIRS 1
 #define MIN_INTERESTING 200
 #define MAXFILES 10
 
+inherit "obj/treasure";
+
 string *stack = ({});
 
 void create() {
+  if(query_mud_port() == 2222) {
+    destruct(this_object());
+    return;
+  }
+
   ::create();
   if(!is_clone())
     return;
@@ -87,7 +92,7 @@ int process_alias(string s, string fn) {
   if(sizeof(explode(s," ")) > 2)
     return 0;
 
-  write_file(DATA_FILE, s+"#"+fn+"\n");
+  write_file(FIND_DATA_FILE, s+"#"+fn+"\n");
   return 0;
 }
 
@@ -178,7 +183,7 @@ int do_traverse(string s) {
   else {
     if(s[<1] != 47)
       s = s+"/";
-    stack = explode(read_file(DIRLIST),"\n");
+    stack = explode(read_file(FIND_DIRLIST),"\n");
 
     i = member_array(s,stack);
     if(i == -1)

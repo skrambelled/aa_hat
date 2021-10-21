@@ -1,7 +1,7 @@
 #pragma strict_types
 
-#define SAVE_FILE "/d/Qc/obj/find/FIND"
-#define DATA_FILE "/d/Qc/obj/find/FIND.dat"
+#include "find_def.h"
+
 #define CHUNK_SIZE 500
 
 mapping files;
@@ -14,8 +14,8 @@ void create() {
   }
   seteuid(getuid());
   files = ([]);
-  if(file_size(SAVE_FILE+".o") >= 0)
-    restore_object(SAVE_FILE);
+  if(file_size(FIND_SAVE_FILE+".o") >= 0)
+    restore_object(FIND_SAVE_FILE);
   else
     read_data_file(1);
 }
@@ -27,7 +27,7 @@ void read_data_file(int start) {
     filter_array(explode(text, "\n"), "process_line", this_object());
     call_out("read_data_file", 2, start+CHUNK_SIZE);
   } else {
-    save_object(SAVE_FILE);
+    save_object(FIND_SAVE_FILE);
   }
 }
 
