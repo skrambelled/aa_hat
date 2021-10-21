@@ -23,7 +23,7 @@ void create() {
 void read_data_file(int start) {
   string text;
 
-  if(text = read_file(DATA_FILE, start, CHUNK_SIZE)) {
+  if(text = read_file(FIND_DATA_FILE, start, CHUNK_SIZE)) {
     filter_array(explode(text, "\n"), "process_line", this_object());
     call_out("read_data_file", 2, start+CHUNK_SIZE);
   } else {
