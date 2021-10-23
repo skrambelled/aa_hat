@@ -45,5 +45,5 @@ int process_line(string text) {
 }
 
 string *find(string text) {
-  return files[text];
+  return deep_copy(files[text]);
 }
