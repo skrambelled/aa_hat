@@ -1,0 +1,42 @@
+QC FINDER TOOL
+Updated: October 13, 2021 (Change this date whenever you run the tool!)
+
+Note: the updater aspect of this tool does not work at the moment. It will
+need to be fixed and then once it is working we need to delete the .dat and
+.o files and then run the updater using the new DIRLIST which only includes
+areas that are officially installed into the game...Delete this note after
+the updater tool is fixed.
+
+This tool's directory contains the following files:
+
+/d/Qc/obj/find/DIRLIST
+Contains the file paths of every "area" that's installed in the game. If you
+are using "hatfind" and cannot find a certain object or monster then it is
+possible the file path is missing from this list. Another reason is that the
+object or monster may have been coded poorly with incorrect set_name and
+set_alias, and so the tool has a hard time locating it with the keyword that
+you searched with, and those files would need to be fixed.
+
+/d/Qc/obj/find/find.c
+Handles the saving and loading of information to and from the FIND_DATA.dat
+and FIND_SAVE.o files.
+
+/d/Qc/obj/find/FIND.dat
+/d/Qc/obj/find/FIND.o
+These files contain the file paths and aliases of things that were scanned.
+If these files do not exist then they will create themselves the next time
+the tool is ran. It is recommended that you delete both of these files before
+running the tool so that you can get a clean, fully updated finder.
+
+/d/Qc/obj/find/finder.c
+This is the actual tool that you will use to update things with. Clone the
+tool on port 4444, do not use it anywhere else! Then to use the tool you will
+type 'traverse /d/Aalgirzst/' or whichever path is alphabetically first in
+the DIRLIST and it will start scanning that path and all of the ones below it
+in the list, until it finishes. This tool will take about 4 hours to complete
+from the time you start, so be sure to only attempt it at the start of a
+fresh reboot for optimal results, fastest speeds, and the most stability
+since nothing will be loaded yet.
+
+/d/Qc/obj/find/README
+This is the file you are reading now, it tells you how this tool works.
